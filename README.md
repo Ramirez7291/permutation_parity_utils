@@ -18,3 +18,10 @@ The library exists because determinant and orientation code often needs a parity
 The edge to be aware of: input must be a permutation of `range(len(seq))` — duplicates, gaps, or negative values raise `ValueError`. The empty list is treated as the identity (even). Construction of a `Permutation` validates and caches the sign, so repeated `sign` queries are free; the class also makes a defensive copy of the input list, so mutating the original after construction has no effect.
 
 Exported names: `parity(seq: list[int]) -> int` and `Permutation(seq)` with `.sign`, `.is_even()`, `.is_odd()`, `.sequence`.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
